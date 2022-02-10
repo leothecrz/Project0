@@ -50,6 +50,27 @@ public interface BagInterface<T>
 	public T[] toArray();
 	
 	
+	/**
+	 * 
+	 * @return 
+	 */
+	public T add();
+	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public  T intersection();
+	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public T difference();
+	
+	
 	
 	
 	
