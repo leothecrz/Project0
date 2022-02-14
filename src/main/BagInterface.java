@@ -59,7 +59,7 @@ public interface BagInterface<T>
 	/** Combines the method caller collection with the aBag collection into a single collection
 	 *  in a way where only entries that exist in both will be kept in the new collection.
 	 * @param A collection aBag to be compared to method caller.
-	 * @return	A collection bag with only entries that exist in the compared collections. 
+	 * @return	A collection bag with only entries that exist in both the compared collections. 
 	 */
 	public  T intersection(T aBag);
 	
