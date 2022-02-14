@@ -54,14 +54,14 @@ public interface BagInterface<T>
 	 * @param A collection or bag aBag to be combined with method caller.
 	 * @return  The combined collection bag with duplicates.
 	 */
-	public T union(T aBag);
+	public BagInterface<T> union(BagInterface<T> aBag);
 	
 	/** Combines the method caller collection with the aBag collection into a single collection
 	 *  in a way where only entries that exist in both will be kept in the new collection.
 	 * @param A collection aBag to be compared to method caller.
 	 * @return	A collection bag with only entries that exist in both the compared collections. 
 	 */
-	public  T intersection(T aBag);
+	public  BagInterface<T> intersection(BagInterface<T> aBag);
 	
 	
 	/** Combines the method caller collection with the aBag collection into a single collection
@@ -69,12 +69,6 @@ public interface BagInterface<T>
 	 * @param A collection aBag to be compared to the method caller collection.
 	 * @return	A collection bag that will have entries that do not overlap between both collections. 
 	 */
-	public T difference(T aBag);
-	
-	
-	
-	
-	
-	
+	public BagInterface<T> difference(BagInterface<T> aBag);
 	
 } // end BagInterface

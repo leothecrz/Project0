@@ -13,7 +13,6 @@ public class Node<T> {
 	}
 	
 	public T getData() {
-		System.out.println(data);
 		return data;
 	}
 	
