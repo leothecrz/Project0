@@ -49,26 +49,27 @@ public interface BagInterface<T>
              Note: If the bag is empty, the returned array is empty. */
 	public T[] toArray();
 	
-	
-	/**
-	 * 
-	 * @return 
+	/** Combines the method caller collection with the aBag collection into a single collection
+	 *  that will store duplicates of the entries if there are any.
+	 * @param A collection or bag aBag to be combined with method caller.
+	 * @return  The combined collection bag with duplicates.
 	 */
-	public T add();
+	public T union(T aBag);
 	
-	
-	/**
-	 * 
-	 * @return
+	/** Combines the method caller collection with the aBag collection into a single collection
+	 *  in a way where only entries that exist in both will be kept in the new collection.
+	 * @param A collection aBag to be compared to method caller.
+	 * @return	A collection bag with only entries that exist in the compared collections. 
 	 */
-	public  T intersection();
+	public  T intersection(T aBag);
 	
 	
-	/**
-	 * 
-	 * @return
+	/** Combines the method caller collection with the aBag collection into a single collection
+	 *  in a way where only entries that do not appear on both collection will be kept.
+	 * @param A collection aBag to be compared to the method caller collection.
+	 * @return	A collection bag that will have entries that do not overlap between both collections. 
 	 */
-	public T difference();
+	public T difference(T aBag);
 	
 	
 	
