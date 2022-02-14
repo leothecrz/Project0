@@ -3,80 +3,107 @@ package main;
 /** OUTLINE
     A class of bags whose entries are stored in a chain of linked nodes.
     The bag is never full.
-    @author Frank M. Carrano, Timothy M. Henry
-    @version 5.0
+    @version 0.1
 */
 public class LinkedBag<T> implements BagInterface<T> {
-	private Node firstNode;       // reference to first node
-	private int numberOfEntries;
+	private Node<T> firstNode; /* Bag start*/
+	private int numberOfEntries; /* Counts entries in the bag */
 
 	public LinkedBag() {
 		firstNode = null;
       numberOfEntries = 0;
-	} // end default constructor
-
-	public void DebugDump(Node Selected) {
-		
-		try { System.out.println(Selected.data); }
-		catch (Exception nullPointerException) { System.out.println("Empty"); }
-		
 	}
 	
 	public boolean add(T newEntry) {
-		Node newNode = new Node(newEntry);
-		newNode.next = firstNode;
-		
-		DebugDump(firstNode);
-		firstNode = newNode;
-		DebugDump(firstNode);
+		Node<T> newNode = new Node<T>(newEntry);
+		newNode.setNextNode(firstNode);
 		numberOfEntries++;
-		
 		return true;
 	}
 	
-	
-	@Override
 	public int getCurrentSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return numberOfEntries;
 	}
 
-	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return numberOfEntries == 0;
 	}
 
-	
-
-	@Override
 	public T remove() {
-		// TODO Auto-generated method stub
-		return null;
+		T entry = null;
+		if (firstNode != null) {
+			entry = firstNode.getData();
+			firstNode = firstNode.getNextNode();
+			numberOfEntries--;
+		}
+		return entry;
 	}
 
-	@Override
-	public boolean remove(T anEntry) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
+	private Node<T> getReferenceTo(T anEntry) {
 		
+		boolean found = false;
+		Node<T> currentNode = firstNode;
+		
+		while (!found && (currentNode != null)) { // while not found or not end of list
+			
+			if (anEntry.equals(currentNode.getData())) {
+				found = true;
+			} else {
+				currentNode = currentNode.getNextNode();
+			}
+		}
+		return currentNode;
+	}
+	
+	public boolean remove(T anEntry) {
+		
+		boolean removed = false;
+		Node<T> entryNode = getReferenceTo(anEntry);
+		
+		if (entryNode != null) {
+			entryNode.setData(firstNode.getData()); // first nodes data overrides the entry node's data. Entry node is replaced by first node. 
+			firstNode = firstNode.getNextNode(); // first node is a redundant copy and is removed
+			numberOfEntries--;
+			removed = true;
+		}
+		return removed;
+	}
+		
+	public void clear() {
+		while(!isEmpty()) {
+			remove();
+		}
 	}
 
-	@Override
 	public int getFrequencyOf(T anEntry) {
-		// TODO Auto-generated method stub
-		return 0;
+		int frequency = 0;
+		int i = 0;
+		Node<T> currentNode = firstNode;
+		
+		while ((i < numberOfEntries) && (currentNode != null)) {
+			
+			if (anEntry.equals(currentNode.getData())) {
+				frequency++;
+			}
+			i++;
+			currentNode = currentNode.getNextNode();	
+		}
+		
+		return frequency;
 	}
 
-	@Override
 	public boolean contains(T anEntry) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		boolean contained = false;
+		Node<T> currentNode = firstNode;
+		while( (!contained) && (currentNode != null) ) {
+			if (anEntry.equals(currentNode.getData())){
+				contained = true;
+			} else {
+				currentNode = currentNode.getNextNode();
+			}
+		}
+		return contained;
 	}
 
 	public T[] toArray() {
@@ -85,11 +112,11 @@ public class LinkedBag<T> implements BagInterface<T> {
 		T[] array = (T[])new Object[this.numberOfEntries];
 		
 		int i = 0;
-		Node currentNode = firstNode;
+		Node<T> currentNode = firstNode;
 		while ((i < numberOfEntries) && (currentNode != null)) {
-			array[i] = currentNode.data;
+			array[i] = currentNode.getData();
 			i++;
-			currentNode = currentNode.next;
+			currentNode = currentNode.getNextNode();
 		}
 		
 		return array;
@@ -113,19 +140,4 @@ public class LinkedBag<T> implements BagInterface<T> {
 		return null;
 	}
 	
-	private class Node {
-		private T    data; // Entry in bag
-		private Node next; // Link to next node
-      
-		private Node(T dataPortion) { // Node Constructor when there is no NextNode
-			this(dataPortion, null); 
-		} // end constructor
-		
-		private Node(T dataPortion, Node nextNode) {
-			data = dataPortion;
-			next = nextNode;
-		} // end constructor
-		
-	} // end Node
-	
-} // end LinkedBag
+}
