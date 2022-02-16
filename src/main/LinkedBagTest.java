@@ -1,52 +1,58 @@
 package main;
 
 public class LinkedBagTest {
-		
 	
 	public static void main(String[] args) {
-	
-		LinkedBag<String> str1 = new LinkedBag<>();
-		LinkedBag<String> str2 = new LinkedBag<>();
 		
-		str2.add("a"); str2.add("a"); str2.add("a"); str2.add("b"); str2.add("c");
-		str2.add("d"); str2.add("0"); str2.add("r"); str2.add("r"); str2.add("r");
+		LinkedBag<BagItems> bag1 = new LinkedBag<>();
+		LinkedBag<BagItems> bag2 = new LinkedBag<>();
 		
-		str1.add("a"); str1.add("a"); str1.add("b"); str1.add("b"); str1.add("c");
-		str1.add("c"); str1.add("e"); str1.add("0"); str1.add("0"); str1.add("0");
+		BagItems iA = new BagItems("Shoes", 75.00);
+		BagItems iB = new BagItems("TextBook", 135.00);
+		BagItems iC = new BagItems("Notebooks", 1.20);
+		BagItems iD = new BagItems("Backpack", 35.00);
+		BagItems iE = new BagItems("Laptop", 185.00);
+		BagItems iF = new BagItems("Calculators", 65.00);
+		BagItems iG = new BagItems("Markers", 12.00);
 		
-		LinkedBag<String> union = (LinkedBag<String>) str1.union(str2);		
+		bag1.add(iA);
+		bag1.add(iB);
+		bag1.add(iC);
+		bag1.add(iD);
+		bag1.add(iD);
+		bag1.add(iE);
+		bag1.add(iE);
 		
-		Object[] printer = union.toArray();
+		bag2.add(iD);
+		bag2.add(iD);
+		bag2.add(iD);
+		bag2.add(iE);
+		bag2.add(iF);
+		bag2.add(iG);
 		
-		for (int i=0;i<printer.length;i++) {
-			if ((i%15)==0) System.out.println("\n");
-		System.out.print(printer[i] + ",");
-		}
-		
-		System.out.println("\n----------------------------------");
-		
-		LinkedBag<String> intersect = (LinkedBag<String>) str1.intersection(str2);		
-		
-		Object[] printer1 = intersect.toArray();
-		
-		for (int i=0;i<printer1.length;i++) {
-			if ((i%10)==0) System.out.println("\n");
-			System.out.print(printer1[i] + ",");
-		}
-		
-		System.out.println("\n----------------------------------");
-		
-		LinkedBag<String> difference = (LinkedBag<String>) str1.difference(str2);		
-		
-		Object[] printer2 = difference.toArray();
-		
-		for (int i=0;i<printer2.length;i++) {
-			if ((i%10)==0) System.out.println("\n");
-			System.out.print(printer2[i] + ",");
-		}
-		System.out.println("\n----------------------------------");
+		LinkedBag<BagItems> uBag = (LinkedBag<BagItems>) bag1.union(bag2);
+		LinkedBag<BagItems> iBag = (LinkedBag<BagItems>) bag1.intersection(bag2);
+		LinkedBag<BagItems> dBag = (LinkedBag<BagItems>) bag1.difference(bag2);
+		LinkedBag<BagItems> dBag1 = (LinkedBag<BagItems>) bag2.difference(bag1);
 
+		
+		printBag("Cart 1", bag1);
+		printBag("Cart 2", bag2);
+		
+		printBag("1 Union 2", uBag);
+		printBag("1 Intersect 2", iBag);
+		printBag("1 Difference 2", dBag);
+		printBag("2 Difference 1", dBag1);
 		
 	}
 	
+	@SuppressWarnings("rawtypes")
+	public static void printBag(String name, LinkedBag bag) {
+		Object[] bagA = bag.toArray();
+		System.out.println(name +": ==============================");
+		for (int i=0;i<bagA.length;i++) {
+			System.out.println("[" + bagA[i].toString() + "], ");
+		}
+		System.out.println("======================================");
+	}
 }

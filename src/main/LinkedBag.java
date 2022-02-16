@@ -162,22 +162,28 @@ public class LinkedBag<T> implements BagInterface<T> {
 		return intersectionBag;
 	}
 
-	@Override
-	public BagInterface<T> difference(BagInterface<T> aBag) {
-		LinkedBag<T> differenceBag = new LinkedBag<>();
-		T[] input = aBag.toArray();
-		T[] source = this.toArray();
+	private LinkedBag<T> makeClone(){
+		LinkedBag<T> outBag = new LinkedBag<>();
 		
-		for (int i=0; i<source.length;i++) {
-			if (!aBag.contains(source[i])) {
-				differenceBag.add(source[i]);
-				source[i]=null;
-			}
+		int i = 0;
+		Node<T> currentNode = nodeReference;
+		while ((i < numberOfEntries) && (currentNode != null)) {
+			outBag.add(currentNode.getData());
+			i++;
+			currentNode = currentNode.getNextNode();
 		}
+		
+		return outBag;
+	}
+	
+	
+	public BagInterface<T> difference(BagInterface<T> aBag) {
+		LinkedBag<T> differenceBag = this.makeClone();
+		T[] input = aBag.toArray();	
+		
 		for (int i=0; i<input.length;i++) {
-			if (!this.contains(input[i])) {
-				differenceBag.add(input[i]);
-				input[i]=null;
+			if (differenceBag.contains(input[i])) {
+				differenceBag.remove(input[i]);
 			}
 		}
 		
