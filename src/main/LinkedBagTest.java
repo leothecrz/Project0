@@ -2,36 +2,50 @@ package main;
 
 public class LinkedBagTest {
 		
+	
 	public static void main(String[] args) {
 	
-		LinkedBag<Integer> NumBag = new LinkedBag<>();
-		LinkedBag<String> StrBag = new LinkedBag<>();
+		LinkedBag<String> str1 = new LinkedBag<>();
+		LinkedBag<String> str2 = new LinkedBag<>();
 		
-		System.out.println(StrBag.add("Leo"));
-		System.out.println(StrBag.add("Leo"));
-		System.out.println(StrBag.add("Leo"));
-		System.out.println(StrBag.add("Leo"));
-		System.out.println(StrBag.add("Lo"));
-		System.out.println(StrBag.add("eo"));
-		System.out.println(StrBag.add("Le"));
-		System.out.println(StrBag.add("Le2o"));
-
+		str2.add("a"); str2.add("a"); str2.add("a"); str2.add("b"); str2.add("c");
+		str2.add("d"); str2.add("0"); str2.add("r"); str2.add("r"); str2.add("r");
 		
-		System.out.println(StrBag.contains("Leo"));
-		System.out.println(StrBag.getFrequencyOf("Leo"));
-		StrBag.clear();
-		System.out.println(StrBag.contains("Leo"));
-		StrBag.add("Leo");
-		System.out.println(StrBag.getCurrentSize());
-		StrBag.remove();
-		StrBag.add("Leonardo Davalos");
+		str1.add("a"); str1.add("a"); str1.add("b"); str1.add("b"); str1.add("c");
+		str1.add("c"); str1.add("e"); str1.add("0"); str1.add("0"); str1.add("0");
 		
-		Object[] strBag = StrBag.toArray();
+		LinkedBag<String> union = (LinkedBag<String>) str1.union(str2);		
 		
-		for (int i = 0; i < strBag.length; i++) {
-			System.out.println(strBag[i]);
+		Object[] printer = union.toArray();
+		
+		for (int i=0;i<printer.length;i++) {
+			if ((i%15)==0) System.out.println("\n");
+		System.out.print(printer[i] + ",");
 		}
 		
+		System.out.println("\n----------------------------------");
+		
+		LinkedBag<String> intersect = (LinkedBag<String>) str1.intersection(str2);		
+		
+		Object[] printer1 = intersect.toArray();
+		
+		for (int i=0;i<printer1.length;i++) {
+			if ((i%10)==0) System.out.println("\n");
+			System.out.print(printer1[i] + ",");
+		}
+		
+		System.out.println("\n----------------------------------");
+		
+		LinkedBag<String> difference = (LinkedBag<String>) str1.difference(str2);		
+		
+		Object[] printer2 = difference.toArray();
+		
+		for (int i=0;i<printer2.length;i++) {
+			if ((i%10)==0) System.out.println("\n");
+			System.out.print(printer2[i] + ",");
+		}
+		System.out.println("\n----------------------------------");
+
 		
 	}
 	

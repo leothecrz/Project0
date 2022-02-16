@@ -39,7 +39,7 @@ public class LinkedBag<T> implements BagInterface<T> {
 		}
 		return entry;
 	}
-
+	
 	private Node<T> getReferenceTo(T anEntry) {
 		
 		boolean found = false;
@@ -122,33 +122,66 @@ public class LinkedBag<T> implements BagInterface<T> {
 		return array;
 	}
 
-	
-	public BagInterface<T> union(T aBag) { // ######################################
-		
+	@Override
+	public BagInterface<T> union(BagInterface<T> aBag) {
 		Node<T> currentNode = nodeReference;
+		
 		LinkedBag<T> unionBag = new LinkedBag<>();
 		
-		
 		for (int i=0; i < this.getCurrentSize(); i++ ) {
-			unionBag.add(currentNode.getData());
+			if ( currentNode != null) {
+				unionBag.add(currentNode.getData());
+				currentNode = currentNode.getNextNode();
+			}
 		}
-		if (aBag != null) {
-			
+		T[] transferArray = aBag.toArray();
+		for (int i = 0; i < transferArray.length; i++) {
+			unionBag.add(transferArray[i]);
 		}
 		
 		return unionBag;
 	}
 
-	
-	public BagInterface<T> intersection(T aBag) { // ######################################
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public BagInterface<T> intersection(BagInterface<T> aBag) {
+		LinkedBag<T> intersectionBag = new LinkedBag<>();
+		T[] input = aBag.toArray();
+		T[] source = this.toArray();
+		
+		for(int i=0; i<source.length;i++) {
+			for (int j=0;j<input.length;j++) {
+				if (source[i].equals(input[j])){
+					intersectionBag.add(source[i]);
+					input[j]=null;
+					break;
+				}
+			}
+			if (input[input.length-1]== null) break;
+		}
+		
+		return intersectionBag;
 	}
 
-	
-	public BagInterface<T> difference(T aBag) { // ######################################
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public BagInterface<T> difference(BagInterface<T> aBag) {
+		LinkedBag<T> differenceBag = new LinkedBag<>();
+		T[] input = aBag.toArray();
+		T[] source = this.toArray();
+		
+		for (int i=0; i<source.length;i++) {
+			if (!aBag.contains(source[i])) {
+				differenceBag.add(source[i]);
+				source[i]=null;
+			}
+		}
+		for (int i=0; i<input.length;i++) {
+			if (!this.contains(input[i])) {
+				differenceBag.add(input[i]);
+				input[i]=null;
+			}
+		}
+		
+		return differenceBag;
 	}
 	
 }
