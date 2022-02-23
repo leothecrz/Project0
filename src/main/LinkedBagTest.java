@@ -5,18 +5,29 @@ public class LinkedBagTest {
 	public static void main(String[] args) {
 		
 	 
-		LinkedBag<Integer> test1 = new LinkedBag<>();
-		test1.add(1);
-		test1.add(2);
+		BagInterface<Object> test1 = new LinkedBag<>();
+		BagInterface<Object> test2 = new LinkedBag<>();
+		LinkedBag<Object> test3 = new LinkedBag<>();
+		BagInterface<Object> test4 = new ResizableArrayBag<>();
 		
-		test1.clear();
+		for (int i=0; i<10;i++) {
+			test1.add(i);
+		}
+		for (int i=0; i<5;i++) {
+			test2.add(i);
+		}
+		for (int i=5; i<10;i++) {
+			test3.add(i);
+		}
 		
-		test1.add(3);
-		test1.add(4);
+		BagInterface<Object> diff1 = test1.difference(test4);
+		LinkedBag<Object> diff2 = (LinkedBag<Object>) test1.difference(test3);
+
 		
-		
-		
-		
+		Object[] arrayprint = diff1.toArray();
+		arrayprint.toString();
+		Object[] arrayprint1 = diff2.toArray();
+		arrayprint1.toString();
 	}
 	
 	

@@ -110,7 +110,7 @@ public class LinkedBag<T> implements BagInterface<T> {
 	 * @param anEntry
 	 * @return Reference to T anEntry or null if entry is not in the list searched.
 	 */
-	private Node<T> getReferenceTo(T anEntry) { 
+	private Node<T> getReferenceTo(T anEntry) { // O(n)
 		
 		boolean found = false;
 		Node<T> currentNode = nodeReference;
@@ -129,7 +129,7 @@ public class LinkedBag<T> implements BagInterface<T> {
 	 * Takes O(n) time
 	 * @return	An outBag with the contents of the current bag. Any changes to outBag do not affect the original.
 	 */
-	private LinkedBag<T> makeClone(){ // O(n)
+	public LinkedBag<T> makeClone(){ // O(n)
 		LinkedBag<T> outBag = new LinkedBag<>();
 		
 		int i = 0;
@@ -143,15 +143,15 @@ public class LinkedBag<T> implements BagInterface<T> {
 		return outBag;
 	}
 	
-	@Override
-	public BagInterface<T> union(BagInterface<T> aBag){
+	
+	public BagInterface<T> union(BagInterface<T> aBag){ // O(n) + 2*O(m)
+		LinkedBag<T> unionBag = this.makeClone(); // O(n)
+		T[] transferArray = aBag.toArray();		  // O(m)
 		
-		LinkedBag<T> unionBag = this.makeClone();
-		T[] transferArray = aBag.toArray();
-		for (int i=0;i<transferArray.length;i++) {
+		for (int i=0;i<transferArray.length;i++) {// O(m)
+		
 			unionBag.add(transferArray[i]);
 		}
-		
 		return unionBag;
 	}
 	
@@ -181,15 +181,27 @@ public class LinkedBag<T> implements BagInterface<T> {
 	@Override
 	public BagInterface<T> difference(BagInterface<T> aBag) {
 		LinkedBag<T> differenceBag = this.makeClone();
-		T[] input = aBag.toArray();	
-		
-		for (int i=0; i<input.length;i++) {
-			if (differenceBag.contains(input[i])) {
-				differenceBag.remove(input[i]);
+		try {
+			
+			((LinkedBag<T>) aBag).makeClone();
+			
+			while(!aBag.isEmpty()) {
+				differenceBag.remove(aBag.remove());
 			}
-		}
-		
-		return differenceBag;
+			return differenceBag;
+			
+		} catch (ClassCastException e) {
+			
+			T[] input = aBag.toArray();	
+			
+			for (int i=0; i<input.length;i++) {
+				if (differenceBag.contains(input[i])) {
+					differenceBag.remove(input[i]);
+				}
+			}
+			
+			return differenceBag;
+		}		
 	}
-	
+
 }
