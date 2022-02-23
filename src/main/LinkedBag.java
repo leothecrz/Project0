@@ -6,15 +6,15 @@ package main;
     @version 0.1
 */
 public class LinkedBag<T> implements BagInterface<T> {
-	private Node<T> nodeReference; /* Bag start*/
+	private Node<T> nodeReference; /* reference to bag. By default points to head of bag*/
 	private int numberOfEntries; /* Counts entries in the bag */
 
-	public LinkedBag() {
+	public LinkedBag() { // O(1)
 		nodeReference = null;
 		numberOfEntries = 0;
 	}
 	
-	public boolean add(T Entry) {
+	public boolean add(T Entry) { // O(1) adds to front of list
 		Node<T> newNode = new Node<T>(Entry);
 		newNode.setNextNode(nodeReference);
 		numberOfEntries++;
@@ -22,30 +22,30 @@ public class LinkedBag<T> implements BagInterface<T> {
 		return true;
 	}
 	
-	public int getCurrentSize() {
+	public int getCurrentSize() { // O(1)
 		return numberOfEntries;
 	}
 
-	public boolean isEmpty() {
+	public boolean isEmpty() { // O(1)
 		return (numberOfEntries == 0);
 	}
 
-	public T remove() {
-		T entry = null;
-		if (nodeReference != null) {
-			entry = nodeReference.getData();
+	public T remove() { // O(1) removes first entry
+		T entry = null; // creates return object
+		if (nodeReference != null) {	// checks if bag is empty
+			entry = nodeReference.getData();	
 			nodeReference = nodeReference.getNextNode();
 			numberOfEntries--;
 		}
 		return entry;
 	}
 	
-	public boolean remove(T anEntry) {
+	public boolean remove(T anEntry) { // O(n)
 		
 		boolean removed = false;
-		Node<T> entryNode = getReferenceTo(anEntry);
+		Node<T> entryNode = getReferenceTo(anEntry); //getReference dominates method with O(n). Returns null if entry not found.
 		
-		if (entryNode != null) {
+		if (entryNode != null) { // if it was found it will be removed. 
 			entryNode.setData(nodeReference.getData()); // first nodes data overrides the entry node's data. Entry node is replaced by first node. 
 			nodeReference = nodeReference.getNextNode(); // first node is a redundant copy and is removed
 			numberOfEntries--;
@@ -54,13 +54,12 @@ public class LinkedBag<T> implements BagInterface<T> {
 		return removed;
 	}
 		
-	public void clear() {
-		while(!isEmpty()) {
-			remove();
-		}
+	public void clear() { // O(1)
+		this.nodeReference = null;
+		this.numberOfEntries = 0;
 	}
 
-	public int getFrequencyOf(T anEntry) {
+	public int getFrequencyOf(T anEntry) { //O(n) runs through all elements once.
 		int frequency = 0;
 		int i = 0;
 		Node<T> currentNode = nodeReference;
@@ -77,7 +76,7 @@ public class LinkedBag<T> implements BagInterface<T> {
 		return frequency;
 	}
 
-	public boolean contains(T anEntry) {
+	public boolean contains(T anEntry) { //O(n)
 		
 		boolean contained = false;
 		Node<T> currentNode = nodeReference;
@@ -91,7 +90,7 @@ public class LinkedBag<T> implements BagInterface<T> {
 		return contained;
 	}
 
-	public T[] toArray() {
+	public T[] toArray() { // O(n)
 		
 		@SuppressWarnings("unchecked")
 		T[] array = (T[])new Object[this.numberOfEntries];
@@ -109,22 +108,19 @@ public class LinkedBag<T> implements BagInterface<T> {
 	/**
 	 * 
 	 * @param anEntry
-	 * @return Reference to 
+	 * @return Reference to T anEntry or null if entry is not in the list searched.
 	 */
-	private Node<T> getReferenceTo(T anEntry) {
+	private Node<T> getReferenceTo(T anEntry) { 
 		
 		boolean found = false;
 		Node<T> currentNode = nodeReference;
 		
-		while (!found && (currentNode != null)) { // while not found or not end of list
+		while (!found && (currentNode != null)) { // while not found and node exist
 			
 			if (anEntry.equals(currentNode.getData())) {
 				found = true;
-			} else {
-				currentNode = currentNode.getNextNode();
-			}
+			} else {	currentNode = currentNode.getNextNode();	}
 		}
-		if (!found) currentNode = null;
 		return currentNode;
 	}
 	
@@ -133,7 +129,7 @@ public class LinkedBag<T> implements BagInterface<T> {
 	 * Takes O(n) time
 	 * @return	An outBag with the contents of the current bag. Any changes to outBag do not affect the original.
 	 */
-	private LinkedBag<T> makeClone(){
+	private LinkedBag<T> makeClone(){ // O(n)
 		LinkedBag<T> outBag = new LinkedBag<>();
 		
 		int i = 0;
