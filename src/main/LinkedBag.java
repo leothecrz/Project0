@@ -40,22 +40,6 @@ public class LinkedBag<T> implements BagInterface<T> {
 		return entry;
 	}
 	
-	private Node<T> getReferenceTo(T anEntry) {
-		
-		boolean found = false;
-		Node<T> currentNode = nodeReference;
-		
-		while (!found && (currentNode != null)) { // while not found or not end of list
-			
-			if (anEntry.equals(currentNode.getData())) {
-				found = true;
-			} else {
-				currentNode = currentNode.getNextNode();
-			}
-		}
-		return currentNode;
-	}
-	
 	public boolean remove(T anEntry) {
 		
 		boolean removed = false;
@@ -121,27 +105,60 @@ public class LinkedBag<T> implements BagInterface<T> {
 		}
 		return array;
 	}
-
-	@Override
-	public BagInterface<T> union(BagInterface<T> aBag) {
+	
+	/**
+	 * 
+	 * @param anEntry
+	 * @return Reference to 
+	 */
+	private Node<T> getReferenceTo(T anEntry) {
+		
+		boolean found = false;
 		Node<T> currentNode = nodeReference;
 		
-		LinkedBag<T> unionBag = new LinkedBag<>();
-		
-		for (int i=0; i < this.getCurrentSize(); i++ ) {
-			if ( currentNode != null) {
-				unionBag.add(currentNode.getData());
+		while (!found && (currentNode != null)) { // while not found or not end of list
+			
+			if (anEntry.equals(currentNode.getData())) {
+				found = true;
+			} else {
 				currentNode = currentNode.getNextNode();
 			}
 		}
+		if (!found) currentNode = null;
+		return currentNode;
+	}
+	
+	/**
+	 * Clones current bag by running through every element in current bag and adding them to it. 
+	 * Takes O(n) time
+	 * @return	An outBag with the contents of the current bag. Any changes to outBag do not affect the original.
+	 */
+	private LinkedBag<T> makeClone(){
+		LinkedBag<T> outBag = new LinkedBag<>();
+		
+		int i = 0;
+		Node<T> currentNode = nodeReference; // sets working node
+		while ((i < numberOfEntries) && (currentNode != null)) { // goes through every entry and checks if empty
+			outBag.add(currentNode.getData());
+			i++;
+			currentNode = currentNode.getNextNode();
+		}
+		
+		return outBag;
+	}
+	
+	@Override
+	public BagInterface<T> union(BagInterface<T> aBag){
+		
+		LinkedBag<T> unionBag = this.makeClone();
 		T[] transferArray = aBag.toArray();
-		for (int i = 0; i < transferArray.length; i++) {
+		for (int i=0;i<transferArray.length;i++) {
 			unionBag.add(transferArray[i]);
 		}
 		
 		return unionBag;
 	}
-
+	
 	@Override
 	public BagInterface<T> intersection(BagInterface<T> aBag) {
 		LinkedBag<T> intersectionBag = new LinkedBag<>();
@@ -161,22 +178,11 @@ public class LinkedBag<T> implements BagInterface<T> {
 		
 		return intersectionBag;
 	}
-
-	private LinkedBag<T> makeClone(){
-		LinkedBag<T> outBag = new LinkedBag<>();
-		
-		int i = 0;
-		Node<T> currentNode = nodeReference;
-		while ((i < numberOfEntries) && (currentNode != null)) {
-			outBag.add(currentNode.getData());
-			i++;
-			currentNode = currentNode.getNextNode();
-		}
-		
-		return outBag;
-	}
 	
-	
+	/**
+	 * 
+	 */
+	@Override
 	public BagInterface<T> difference(BagInterface<T> aBag) {
 		LinkedBag<T> differenceBag = this.makeClone();
 		T[] input = aBag.toArray();	
