@@ -28,4 +28,14 @@ public class Node<T> {
 		next = newNext;
 	}
 	
+	public String toString() { 
+		boolean nextExist = true;
+		if (this.next==null) {
+			nextExist = false;
+		}
+		 String output = "[Data: " + data.toString() + " - HasNextNode: " + nextExist + "]";
+		 return output;
+				 
+	 }
+	
 }

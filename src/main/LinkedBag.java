@@ -1,10 +1,16 @@
 package main;
 
-/** OUTLINE
-    A class of bags whose entries are stored in a chain of linked nodes.
-    The bag is never full and will dynamically expand and contract as needed.
+/** 
     @version 0.1
 */
+
+/** OUTLINE
+ * A class of bags whose entries are stored in a chain of linked nodes.
+ * The bag is never full and will dynamically expand and contract as needed.
+ * @author Leonardo
+ *
+ * @param <T> - Bag type
+ */
 public class LinkedBag<T> implements BagInterface<T> {
 	private Node<T> nodeReference; /* reference to bag. By default points to head of bag*/
 	private int numberOfEntries; /* Counts entries in the bag */
@@ -29,7 +35,7 @@ public class LinkedBag<T> implements BagInterface<T> {
 	public boolean isEmpty() { // O(1)
 		return (numberOfEntries == 0);
 	}
-
+	
 	public T remove() { // O(1) removes first entry
 		T entry = null; // creates return object
 		if (nodeReference != null) {	// checks if bag is empty
@@ -106,7 +112,7 @@ public class LinkedBag<T> implements BagInterface<T> {
 	}
 	
 	/**
-	 * 
+	 * Returns the node reference to the T anEntry and will return null if it does not exist in the bag.
 	 * @param anEntry
 	 * @return Reference to T anEntry or null if entry is not in the list searched.
 	 */
@@ -125,83 +131,61 @@ public class LinkedBag<T> implements BagInterface<T> {
 	}
 	
 	/**
-	 * Clones current bag by running through every element in current bag and adding them to it. 
+	 * Given aBag, the function will clone its contents into a linked bag. T type is taken from caller of function.
+	 * e.g. this.makeClone(aBag); will result in a clone of aBag parameterized by caller.
 	 * Takes O(n) time
-	 * @return	An outBag with the contents of the current bag. Any changes to outBag do not affect the original.
+	 * @return	An outBag with the contents of the input bag. Any changes to outBag do not affect the original.
 	 */
-	public LinkedBag<T> makeClone(){ // O(n)
-		LinkedBag<T> outBag = new LinkedBag<>();
+	private BagInterface<T> makeClone(BagInterface<T> aBag){
 		
-		int i = 0;
-		Node<T> currentNode = nodeReference; // sets working node
-		while ((i < numberOfEntries) && (currentNode != null)) { // goes through every entry and checks if empty
-			outBag.add(currentNode.getData());
-			i++;
-			currentNode = currentNode.getNextNode();
+		BagInterface<T> cloneBag = new LinkedBag<>();
+		T[] array = aBag.toArray();
+		for (int i=0; i<array.length;i++) {
+			cloneBag.add(array[i]);
 		}
 		
-		return outBag;
+		return cloneBag;
 	}
 	
-	
-	public BagInterface<T> union(BagInterface<T> aBag){ // O(n) + 2*O(m)
-		LinkedBag<T> unionBag = this.makeClone(); // O(n)
-		T[] transferArray = aBag.toArray();		  // O(m)
+	@Override
+	public BagInterface<T> union(BagInterface<T> aBag){ 
+		BagInterface<T> unionBag = this.makeClone(this); // O(n)
+		BagInterface<T> tempBag = this.makeClone(aBag); // O(m)
 		
-		for (int i=0;i<transferArray.length;i++) {// O(m)
-		
-			unionBag.add(transferArray[i]);
+		while(!tempBag.isEmpty()) { //O(m)
+			unionBag.add(tempBag.remove()); //O(1)
 		}
 		return unionBag;
 	}
 	
 	@Override
-	public BagInterface<T> intersection(BagInterface<T> aBag) {
-		LinkedBag<T> intersectionBag = new LinkedBag<>();
-		T[] input = aBag.toArray();
-		T[] source = this.toArray();
+	public BagInterface<T> intersection(BagInterface<T> aBag){
+		BagInterface<T> intersectionBag = new LinkedBag<>();
+		BagInterface<T> self = this.makeClone(this); // O(n)
+		BagInterface<T> input = this.makeClone(aBag); // O(m)
 		
-		for(int i=0; i<source.length;i++) {
-			for (int j=0;j<input.length;j++) {
-				if (source[i].equals(input[j])){
-					intersectionBag.add(source[i]);
-					input[j]=null;
-					break;
-				}
+		while(!input.isEmpty()) {	// O(m) * O(n)
+			T testObject = input.remove();
+			if (self.remove(testObject)) { 
+				intersectionBag.add(testObject);
 			}
-			if (input[input.length-1]== null) break;
 		}
-		
 		return intersectionBag;
 	}
 	
-	/**
-	 * 
-	 */
+	
 	@Override
 	public BagInterface<T> difference(BagInterface<T> aBag) {
-		LinkedBag<T> differenceBag = this.makeClone();
-		try {
-			
-			((LinkedBag<T>) aBag).makeClone();
-			
-			while(!aBag.isEmpty()) {
-				differenceBag.remove(aBag.remove());
-			}
-			return differenceBag;
-			
-		} catch (ClassCastException e) {
-			
-			T[] input = aBag.toArray();	
-			
-			for (int i=0; i<input.length;i++) {
-				if (differenceBag.contains(input[i])) {
-					differenceBag.remove(input[i]);
-				}
-			}
-			
-			return differenceBag;
-		}		
+		
+		BagInterface<T> differenceBag = this.makeClone(this); // O(n)
+		BagInterface<T> compareBag = this.makeClone(aBag); // O(m)
+		
+		
+		while(!compareBag.isEmpty()) { //O(m) * O(n)
+			differenceBag.remove(compareBag.remove());
+		}
+		
+		return differenceBag;
 	}
 
 }
