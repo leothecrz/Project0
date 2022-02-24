@@ -64,8 +64,8 @@ public interface BagInterface<T>
 	public  BagInterface<T> intersection(BagInterface<T> aBag);
 	
 	
-	/** Combines the method caller collection with the aBag collection into a single collection
-	 *  in a way where only entries that do not appear on both collection will be kept.
+	/** Combines the method caller collection with the aBag collection into a single collection in a way
+	 * where only the entries that do not exist in aBag are kept. Keeps only what exist solely on caller collection.
 	 * @param A collection aBag to be compared to the method caller collection.
 	 * @return	A collection bag that will have entries that do not overlap between both collections. 
 	 */
