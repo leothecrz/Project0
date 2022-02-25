@@ -4,25 +4,29 @@ public class LinkedBagTest {
 	
 	public static void main(String[] args) {
 		
-		BagInterface<Integer> IntBag0 = new LinkedBag<>();
+		BagInterface<Integer> OddIntBag = new LinkedBag<>();
 		for(int i=1;i<51;i++) {
 			if (i%2==0) {
-				IntBag0.add(i);
+				OddIntBag.add(i);
 			}
 		}
-		BagInterface<Integer> IntBag1 = new LinkedBag<>();
+		BagInterface<Integer> EvenIntBag = new LinkedBag<>();
 		for(int i=1;i<50;i++) {
 			if (!(i%2==0)) {
-				IntBag1.add(i);
+				EvenIntBag.add(i);
 			}
 		}
-		printer(IntBag0, "1-IntBag0");
-		printer(IntBag1, "1-IntBag1");
+		printer(OddIntBag, "OddIntergerBag");
+		printer(EvenIntBag, "EvenIntegerBag");
 		
-		BagInterface<Integer> oneToTwenty = IntBag0.union(IntBag1);
+		BagInterface<Integer> oneToTwenty = OddIntBag.union(EvenIntBag);
 		printer(oneToTwenty, "Union - Test1");
-		IntBag0.clear();
-		IntBag1.clear();
+		OddIntBag.clear();
+		EvenIntBag.clear();
+		
+		BagInterface<Integer> IntBag0 = new LinkedBag<>();
+		BagInterface<Integer> IntBag1 = new LinkedBag<>();
+
 		
 		for(int i=0;i<20;i++) { // Contains 0 to 20
 				IntBag0.add(i);
@@ -32,12 +36,12 @@ public class LinkedBagTest {
 				IntBag1.add(i);
 			}
 		}
-		printer(IntBag0, "2-IntBag0");
-		printer(IntBag1, "2-IntBag1");
+		printer(IntBag0, "ZeroToNineteen");
+		printer(IntBag1, "OddsZeroToTwenty");
 		BagInterface<Integer> oneToTwentyIntersection = IntBag0.intersection(IntBag1);
-		printer(oneToTwentyIntersection, "Intersection - Test2");
+		printer(oneToTwentyIntersection, "Intersection - Test2(ODDS)");
 		BagInterface<Integer> oneToTwentyDifference = IntBag0.difference(IntBag1);
-		printer(oneToTwentyDifference, "Difference - Test3");
+		printer(oneToTwentyDifference, "Difference - Test3(EVENS)");
 		
 		IntBag0.clear();
 		IntBag1.clear();
@@ -57,8 +61,8 @@ public class LinkedBagTest {
 			}
 		}
 		
-		printer(CharBag0, "3-CharBag0");
-		printer(CharBag1, "3-CharBag1");
+		printer(CharBag0, "AtoI");
+		printer(CharBag1, "3AtoI");
 
 		BagInterface<Character> CharIntersect = CharBag0.intersection(CharBag1);
 		printer(CharIntersect, "Intersection - Test4");
@@ -66,13 +70,6 @@ public class LinkedBagTest {
 		printer(CharDifference, "Difference - Test5");
 		BagInterface<Character> CharDifference1 = CharBag1.difference(CharBag0);
 		printer(CharDifference1, "Difference - Test6");
-		
-		CharBag0.clear();
-		CharBag1.clear();
-		CharIntersect.clear();
-		CharDifference.clear();
-		CharDifference1.clear();
-		charBank = null;
 		
 		BagInterface<Object> MixedBag = new LinkedBag<>();
 			MixedBag.add(0);
@@ -88,13 +85,13 @@ public class LinkedBagTest {
 			MixedBag.add('L');
 			MixedBag.add(55);
 		
-		printer(MixedBag, "MixedBag");
+		printer(MixedBag, "MixedBagTest");
 		
 	}
 	
 	public static <T> void printer(BagInterface<T> aBag, String name) {
 		Object[] print = aBag.toArray();
-		System.out.print("\n "+name+ ": ");
+		System.out.print("\n "+name+ "["+(aBag.getCurrentSize())+"]: ");
 		for(int i=0;i<print.length;i++) {
 			if (i%10==0) System.out.print("\n");
 			System.out.print(print[i] +", ");

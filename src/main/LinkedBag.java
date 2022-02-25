@@ -136,9 +136,9 @@ public class LinkedBag<T> implements BagInterface<T> {
 	 * Takes O(n) time
 	 * @return	An outBag with the contents of the input bag. Any changes to outBag do not affect the original.
 	 */
-	private BagInterface<T> makeClone(BagInterface<T> aBag){
+	private LinkedBag<T> makeClone(BagInterface<T> aBag){
 		
-		BagInterface<T> cloneBag = new LinkedBag<>();
+		LinkedBag<T> cloneBag = new LinkedBag<>();
 		T[] array = aBag.toArray();
 		for (int i=0; i<array.length;i++) {
 			cloneBag.add(array[i]);
@@ -148,7 +148,7 @@ public class LinkedBag<T> implements BagInterface<T> {
 	}
 	
 	@Override
-	public BagInterface<T> union(BagInterface<T> aBag){ 
+	public BagInterface<T> union(BagInterface<T> aBag){ //O(n+2m)
 		BagInterface<T> unionBag = this.makeClone(this); // O(n)
 		BagInterface<T> tempBag = this.makeClone(aBag); // O(m)
 		
