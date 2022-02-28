@@ -4,7 +4,6 @@ public class BagDriver {
 
 	public static void main(String[] args) {
 		
-		// Resizable Array Methods have been commented out.
 		
 		// Character Linked Bag and Resizable Array
 		BagInterface<Character> linkedBag = new LinkedBag<>();
@@ -19,18 +18,18 @@ public class BagDriver {
 		
 		BagInterface<Character> linkedUnionTest= linkedBag.union(arrayBag);
 		printer(linkedUnionTest, "LinkedBag-UnionTest");
-		//BagInterface<Character> arrayUnionTest = arrayBag.union(linkedBag);
-		//printer(arrayUnionTest, "LinkedBag-UnionTest");
+		BagInterface<Character> arrayUnionTest = arrayBag.union(linkedBag);
+		printer(arrayUnionTest, "ResizableArray-UnionTest");
 		 
 		BagInterface<Character> linkedIntersectTest= linkedBag.intersection(arrayBag);
 		printer(linkedIntersectTest, "LinkedBag-IntersectTest");
-		//BagInterface<Character> ArrayIntersectTest= arrayBag.intersection(linkedBag);
-		//printer(ArrayIntersectTest, "Array-IntersectTest");
+		BagInterface<Character> ArrayIntersectTest= arrayBag.intersection(linkedBag);
+		printer(ArrayIntersectTest, "ResizableArray-IntersectTest");
 
 		BagInterface<Character> linkedDifferenceTest= linkedBag.difference(arrayBag);
 		printer(linkedDifferenceTest, "LinkedBag-DifferenceTest");
-		//BagInterface<Character> ArrayDifferenceTest= arrayBag.difference(linkedBag);
-		//printer(ArrayDifferenceTest, "Array-DifferenceTest");
+		BagInterface<Character> ArrayDifferenceTest= arrayBag.difference(linkedBag);
+		printer(ArrayDifferenceTest, "ResizableArray-DifferenceTest");
 		
 		BagInterface<Integer> linkedBag1 = new LinkedBag<>();
 		BagInterface<Integer> arrayBag1 = new ResizableArrayBag<>();
@@ -44,18 +43,18 @@ public class BagDriver {
 		
 		BagInterface<Integer> linkedUnionTest1= linkedBag1.union(arrayBag1);
 		printer(linkedUnionTest1, "LinkedBag-UnionTest");
-		//BagInterface<Character> arrayUnionTest1 = arrayBag1.union(linkedBag1);
-		//printer(arrayUnionTest1, "LinkedBag-UnionTest");
+		BagInterface<Integer> arrayUnionTest1 = arrayBag1.union(linkedBag1);
+		printer(arrayUnionTest1, "ResizableArray-UnionTest");
 		 
 		BagInterface<Integer> linkedIntersectTest1= linkedBag1.intersection(arrayBag1);
 		printer(linkedIntersectTest1, "LinkedBag-IntersectTest");
-		//BagInterface<Character> ArrayIntersectTest1 = arrayBag1.intersection(linkedBag1);
-		//printer(ArrayIntersectTest1, "Array-IntersectTest");
+		BagInterface<Integer> ArrayIntersectTest1 = arrayBag1.intersection(linkedBag1);
+		printer(ArrayIntersectTest1, "ResizableArray-IntersectTest");
 
 		BagInterface<Integer> linkedDifferenceTest1= linkedBag1.difference(arrayBag1);
 		printer(linkedDifferenceTest1, "LinkedBag-DifferenceTest");
-		//BagInterface<Character> ArrayDifferenceTest1= arrayBag1.difference(linkedBag1);
-		//printer(ArrayDifferenceTest1, "Array-DifferenceTest");
+		BagInterface<Integer> ArrayDifferenceTest1= arrayBag1.difference(linkedBag1);
+		printer(ArrayDifferenceTest1, "ResizableArray-DifferenceTest");
 		
 		
 		
