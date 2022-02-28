@@ -1,7 +1,16 @@
 package main;
-
+/**
+ * Test for both the ResizeableArrayBag and LinkedBag for interoperability. The union, difference,
+ * intersect method implementations on both are tested.
+ * @author Leonardo
+ *
+ */
 public class BagDriver {
 
+	/**
+	 * The main method runs the test for both LinkedBags and ResizeableArrayBags.
+	 * @param args --
+	 */
 	public static void main(String[] args) {
 		
 		
@@ -61,6 +70,12 @@ public class BagDriver {
 		
 	}
 
+	/**
+	 * Printer method used to quickly output to console the contents of any bag
+	 * @param <T> Data type
+	 * @param aBag The bag whose content will be searched
+	 * @param name The string name to be printed as a Identifier to the bag.
+	 */
 	public static <T> void printer(BagInterface<T> aBag, String name) {
 		Object[] print = aBag.toArray();
 		System.out.print("\n "+name+ "["+(aBag.getCurrentSize())+"]: ");

@@ -1,7 +1,14 @@
 package main;
-
+/**
+ * Tests the implementation of union, intersection and difference on the ResizeableArrayBag
+ * @author Dean
+ *
+ */
 public class ArrayBagTest {
-
+	/**
+	 * Main method runs the test on the ResizeableArrayBag
+	 * @param args --
+	 */
    public static void main(String[] args) {
 		
 		BagInterface<Integer> EvenIntBagArray = new ResizableArrayBag<>();
@@ -83,7 +90,12 @@ public class ArrayBagTest {
 		printer(MixedBag, "MixedBagTest");
 		
 	}
-	
+   	/**
+	 * Printer method used to quickly output to console the contents of any bag
+	 * @param <T> Data type
+	 * @param aBag The bag whose content will be searched
+	 * @param name The string name to be printed as a Identifier to the bag.
+	 */
 	public static <T> void printer(BagInterface<T> aBag, String name) {
 		Object[] print = aBag.toArray();
 		System.out.print("\n "+name+ "["+(aBag.getCurrentSize())+"]: ");

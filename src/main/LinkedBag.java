@@ -1,21 +1,20 @@
 package main;
 
-/** 
-    @version 0.1
-*/
-
 /** OUTLINE
  * A class of bags whose entries are stored in a chain of linked nodes.
  * The bag is never full and will dynamically expand and contract as needed.
- * @author Leonardo
  *
  * @param <T> - Bag type
+ * @version 0.1
  */
 public class LinkedBag<T> implements BagInterface<T> {
-	private Node<T> nodeReference; /* reference to bag. By default points to head of bag*/
-	private int numberOfEntries; /* Counts entries in the bag */
+	private Node<T> nodeReference; // reference to bag. By default points to head of bag
+	private int numberOfEntries; // Counts entries in the bag 
 
-	public LinkedBag() { // O(1)
+	/** Default construction of a LinkedBag 
+	 * It will have zero entries and have a null as a its nodereference.
+	 */
+	public LinkedBag() { 
 		nodeReference = null;
 		numberOfEntries = 0;
 	}
@@ -113,7 +112,7 @@ public class LinkedBag<T> implements BagInterface<T> {
 	
 	/**
 	 * Returns the node reference to the T anEntry and will return null if it does not exist in the bag.
-	 * @param anEntry
+	 * @param anEntry - The object or entry that is being searched for.
 	 * @return Reference to T anEntry or null if entry is not in the list searched.
 	 */
 	private Node<T> getReferenceTo(T anEntry) { // O(n)
@@ -136,6 +135,7 @@ public class LinkedBag<T> implements BagInterface<T> {
 	 * Linked bag 
 	 * IF entry is null it will return a new LinkedBag
 	 * Takes O(n) time
+	 * @param aBag - The bag interface object to be cloned.
 	 * @return	An outBag with the contents of the input bag. Any changes to outBag do not affect the original.
 	 */
 	private LinkedBag<T> makeClone(BagInterface<T> aBag){
