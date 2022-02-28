@@ -201,20 +201,24 @@ public final class ResizableArrayBag<T> implements BagInterface<T> {
 
 	private ResizableArrayBag<T> cloneBag(BagInterface<T> aBag){
 		ResizableArrayBag<T> bagClone = new ResizableArrayBag<>();
-		T[] array = aBag.toArray();
-		for (int i=0; i<array.length;i++) {
-			bagClone.add(array[i]);
+		if (aBag != null) {
+			T[] array = aBag.toArray();
+			for (int i=0; i<array.length;i++) {
+				bagClone.add(array[i]);
+			}
 		}
 		return bagClone;
 	}
 
 	@Override
-	public BagInterface<T> union(BagInterface<T> aBag){
-		BagInterface<T> unionBag = this.cloneBag(this);
-		BagInterface<T> tempBag = this.cloneBag(aBag);
+	public BagInterface<T> union(BagInterface<T> aBag){ //O(n+2m)
+		BagInterface<T> unionBag = this.cloneBag(this);  //O(n)
+		if (aBag != null) { 
+			BagInterface<T> tempBag = this.cloneBag(aBag); //O(m)
 
-		while(!tempBag.isEmpty()){
-			unionBag.add(tempBag.remove());
+			while(!tempBag.isEmpty()){ //O(m)
+				unionBag.add(tempBag.remove()); //O(1)
+			}
 		}
 		return unionBag;
 	}
@@ -222,13 +226,15 @@ public final class ResizableArrayBag<T> implements BagInterface<T> {
 	@Override
 	public BagInterface<T> intersection(BagInterface<T> aBag){
 		BagInterface<T> intersectionBag = new ResizableArrayBag<>();
-		BagInterface<T> self = this.cloneBag(this); // O(n)
-		BagInterface<T> input = this.cloneBag(aBag); // O(m)
+		if (aBag != null && !(aBag.isEmpty()) ) {
+			BagInterface<T> self = this.cloneBag(this); // O(n)
+			BagInterface<T> input = this.cloneBag(aBag); // O(m)
 		
-		while(!input.isEmpty()) {	// O(m) * O(n)
-			T testObject = input.remove();
-			if (self.remove(testObject)) { 
-				intersectionBag.add(testObject);
+			while(!input.isEmpty()) {	// O(m) * O(n)
+				T testObject = input.remove();
+				if (self.remove(testObject)) { 
+					intersectionBag.add(testObject);
+				}
 			}
 		}
 		return intersectionBag;
@@ -238,11 +244,14 @@ public final class ResizableArrayBag<T> implements BagInterface<T> {
 	public BagInterface<T> difference(BagInterface<T> aBag) {
 		
 		BagInterface<T> differenceBag = this.cloneBag(this); // O(n)
-		BagInterface<T> compareBag = this.cloneBag(aBag); // O(m)
+		
+		if (aBag != null && !(aBag.isEmpty())) {
+			BagInterface<T> compareBag = this.cloneBag(aBag); // O(m)
 		
 		
-		while(!compareBag.isEmpty()) { //O(m) * O(n)
-			differenceBag.remove(compareBag.remove());
+			while(!compareBag.isEmpty()) { //O(m) * O(n)
+				differenceBag.remove(compareBag.remove());
+			}
 		}
 		
 		return differenceBag;
