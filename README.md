@@ -11,3 +11,4 @@ Dean Mah:
 Leonardo Davalos:
 
 	LinkedBag.java , LinkedBagTest.java , BagDriver.java
+[Java Doc](doc/index.html)
