@@ -6,7 +6,7 @@ Dean Mah
 
 Dean Mah: 
 	
-	RizeableArrayBag, ,Video Editing
+	ArrayBagTest.java , RizeableArrayBagTest.java , Video Editing
 	
 Leonardo Davalos:
 
