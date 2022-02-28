@@ -67,7 +67,7 @@ public class ArrayBagTest {
 		printer(CharIntersect, "Intersection - Test4");
 		BagInterface<Character> CharDifference = CharBag2.difference(CharBag3);
 		printer(CharDifference, "Difference - Test5");
-		BagInterface<Character> CharDifference1 = CharBag2.difference(CharBag3);
+		BagInterface<Character> CharDifference1 = CharBag3.difference(CharBag2);
 		printer(CharDifference1, "Difference - Test6");
 		
 		BagInterface<Object> MixedBag = new ResizableArrayBag<>();
