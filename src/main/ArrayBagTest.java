@@ -19,8 +19,8 @@ public class ArrayBagTest {
 		printer(OddIntBagArray, "OddIntergerBag");
 		printer(EvenIntBagArray, "EvenIntegerBag");
 		
-		BagInterface<Integer> oneToTwenty = OddIntBagArray.union(EvenIntBagArray);
-		printer(oneToTwenty, "Union - Test1");
+		BagInterface<Integer> oneToFifty = OddIntBagArray.union(EvenIntBagArray);
+		printer(oneToFifty, "Union - Test1");
 		OddIntBagArray.clear();
 		EvenIntBagArray.clear();
 		
