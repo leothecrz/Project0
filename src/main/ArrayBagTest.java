@@ -4,16 +4,16 @@ public class ArrayBagTest {
 
    public static void main(String[] args) {
 		
-		BagInterface<Integer> OddIntBagArray = new ResizableArrayBag<>();
+		BagInterface<Integer> EvenIntBagArray = new ResizableArrayBag<>();
 		for(int i=1;i<51;i++) {
 			if (i%2==0) {
-				OddIntBagArray.add(i);
+				EvenIntBagArray.add(i);
 			}
 		}
-		BagInterface<Integer> EvenIntBagArray = new ResizableArrayBag<>();
+		BagInterface<Integer> OddIntBagArray = new ResizableArrayBag<>();
 		for(int i=1;i<50;i++) {
 			if (!(i%2==0)) {
-				EvenIntBagArray.add(i);
+				OddIntBagArray.add(i);
 			}
 		}
 		printer(OddIntBagArray, "OddIntergerBag");

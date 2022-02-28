@@ -4,16 +4,18 @@ public class LinkedBagTest {
 	
 	public static void main(String[] args) {
 		
-		BagInterface<Integer> OddIntBag = new LinkedBag<>();
+		BagInterface<Integer> EvenIntBag = new LinkedBag<>();
 		for(int i=1;i<51;i++) {
 			if (i%2==0) {
-				OddIntBag.add(i);
+				EvenIntBag.add(i);
+
 			}
 		}
-		BagInterface<Integer> EvenIntBag = new LinkedBag<>();
+		BagInterface<Integer> OddIntBag = new LinkedBag<>();
 		for(int i=1;i<50;i++) {
 			if (!(i%2==0)) {
-				EvenIntBag.add(i);
+				OddIntBag.add(i);
+
 			}
 		}
 		printer(OddIntBag, "OddIntergerBag");
