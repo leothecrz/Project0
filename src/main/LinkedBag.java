@@ -133,15 +133,19 @@ public class LinkedBag<T> implements BagInterface<T> {
 	/**
 	 * Given aBag, the function will clone its contents into a linked bag. T type is taken from caller of function.
 	 * e.g. this.makeClone(aBag); will result in a clone of aBag parameterized by caller.
+	 * Linked bag 
+	 * IF entry is null it will return a new LinkedBag
 	 * Takes O(n) time
 	 * @return	An outBag with the contents of the input bag. Any changes to outBag do not affect the original.
 	 */
 	private LinkedBag<T> makeClone(BagInterface<T> aBag){
 		
 		LinkedBag<T> cloneBag = new LinkedBag<>();
-		T[] array = aBag.toArray();
-		for (int i=0; i<array.length;i++) {
-			cloneBag.add(array[i]);
+		if (aBag != null) {
+			T[] array = aBag.toArray();
+			for (int i=0; i<array.length;i++) {
+				cloneBag.add(array[i]);
+			}
 		}
 		
 		return cloneBag;
@@ -150,42 +154,44 @@ public class LinkedBag<T> implements BagInterface<T> {
 	@Override
 	public BagInterface<T> union(BagInterface<T> aBag){ //O(n+2m)
 		BagInterface<T> unionBag = this.makeClone(this); // O(n)
-		BagInterface<T> tempBag = this.makeClone(aBag); // O(m)
-		
-		while(!tempBag.isEmpty()) { //O(m)
-			unionBag.add(tempBag.remove()); //O(1)
+		if (aBag != null) { 
+			BagInterface<T> tempBag = this.makeClone(aBag); //O(m)
+			while(!tempBag.isEmpty()) { //O(m)
+				unionBag.add(tempBag.remove()); //O(1)
+			}
 		}
-		return unionBag;
+			return unionBag; 
 	}
 	
 	@Override
 	public BagInterface<T> intersection(BagInterface<T> aBag){
 		BagInterface<T> intersectionBag = new LinkedBag<>();
-		BagInterface<T> self = this.makeClone(this); // O(n)
-		BagInterface<T> input = this.makeClone(aBag); // O(m)
-		
-		while(!input.isEmpty()) {	// O(m) * O(n)
-			T testObject = input.remove();
-			if (self.remove(testObject)) { 
-				intersectionBag.add(testObject);
+		if (aBag != null && !(aBag.isEmpty()) ) {
+			BagInterface<T> input = this.makeClone(aBag); // O(m)
+			BagInterface<T> self = this.makeClone(this); // O(n)
+
+			while(!input.isEmpty()) {	// O(m) * O(n)
+				T testObject = input.remove(); // pops the first node from the second linked list
+				
+				if (self.remove(testObject)) {  // inputs the popped nodes data for removal in first bag
+					intersectionBag.add(testObject); // if it can be removed then add it to the list of intersections
+				}
 			}
 		}
 		return intersectionBag;
 	}
 	
-	
 	@Override
 	public BagInterface<T> difference(BagInterface<T> aBag) {
-		
 		BagInterface<T> differenceBag = this.makeClone(this); // O(n)
-		BagInterface<T> compareBag = this.makeClone(aBag); // O(m)
 		
-		
-		while(!compareBag.isEmpty()) { //O(m) * O(n)
-			differenceBag.remove(compareBag.remove());
+		if (aBag != null && !(aBag.isEmpty())) { // if the second bag is empty then the whole first bad is the difference
+			BagInterface<T> compareBag = this.makeClone(aBag); // O(m)
+				
+			while(!compareBag.isEmpty()) { //O(m) * O(n)
+				differenceBag.remove(compareBag.remove());
+			}
 		}
-		
 		return differenceBag;
 	}
-
 }
