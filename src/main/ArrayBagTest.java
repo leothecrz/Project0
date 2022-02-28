@@ -45,7 +45,6 @@ public class ArrayBagTest {
 		
 		IntBag2.clear();
 		IntBag3.clear();
-		oneToTwenty.clear();
 		oneToTwentyIntersection.clear();
 		oneToTwentyDifference.clear();
 		

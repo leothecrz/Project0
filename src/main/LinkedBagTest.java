@@ -21,8 +21,8 @@ public class LinkedBagTest {
 		printer(OddIntBag, "OddIntergerBag");
 		printer(EvenIntBag, "EvenIntegerBag");
 		
-		BagInterface<Integer> oneToTwenty = OddIntBag.union(EvenIntBag);
-		printer(oneToTwenty, "Union - Test1");
+		BagInterface<Integer> oneToFifty = OddIntBag.union(EvenIntBag);
+		printer(oneToFifty, "Union - Test1");
 		OddIntBag.clear();
 		EvenIntBag.clear();
 		
@@ -47,7 +47,6 @@ public class LinkedBagTest {
 		
 		IntBag0.clear();
 		IntBag1.clear();
-		oneToTwenty.clear();
 		oneToTwentyIntersection.clear();
 		oneToTwentyDifference.clear();
 		
